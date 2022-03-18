@@ -7,7 +7,7 @@ import { StringUtil } from "../../util"
 import { AuthService } from "./AuthService"
 import { AuthType } from "./AuthType"
 import { ResponseDto, SignUpRequestBody } from "./dtos"
-import { OK, ResultType, ServiceResult } from "./ServiceResult"
+import { ResultType, ServiceResult } from "./ServiceResult"
 
 @Controller({
     path:  Route.URLV1 + 'auth',
@@ -32,7 +32,7 @@ export class AuthController {
             return ResponseDto.error(HttpStatus.UNAUTHORIZED, "cannot auth with facebook account")
         }
         const token = await this.authService.generateToken(req.user.info, AuthType.Facebook)
-        res.redirect(`http://localhost:8090?token=${token}`)
+        res.redirect(`${process.env.APP_URL}?token=${token}`)
     }
 
     @Get('google/redirect')
@@ -42,7 +42,7 @@ export class AuthController {
             return ResponseDto.error(HttpStatus.UNAUTHORIZED, "cannot auth with google account")
         }
         const token = await this.authService.generateToken(req.user.info, AuthType.Google)
-        res.redirect(`http://localhost:8090?token=${token}`)
+        res.redirect(`${process.env.APP_URL}?token=${token}`)
     }
 
     @UseGuards(AuthGuard('local'))
@@ -78,6 +78,5 @@ export class AuthController {
         if (data.usercode) {
             this.authService.snapshot(`metax:usercode:${data.usercode}` , {activeCode: data.activecode, status: data.isActive})
         }
-        console.log('[KAKFA-CONSUMER] Print message after receiving: ', message.value);
     }
 }

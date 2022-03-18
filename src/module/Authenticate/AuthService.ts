@@ -29,11 +29,10 @@ export class AuthService {
                 timestamp: new Date().getUTCSeconds()
             }
         })
-    }   
+    }
 
-    //TODO: need to done signIn
     validate(email: string, password: string) {
-        const headers = {
+        const HEADERS = {
             'content-type': 'application/json',
             'authorization': ''
         }
@@ -42,7 +41,7 @@ export class AuthService {
         return this.httpService.post(veriry, {
             email: email,
             password: password
-        }, {headers:headers}).pipe(
+        }, {headers: HEADERS}).pipe(
             map(value => {
                 if (value.data.code != HttpStatus.OK) {
                     return new ServiceResult(ResultType.Error, value.data.message, {})
