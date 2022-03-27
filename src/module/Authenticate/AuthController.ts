@@ -57,9 +57,9 @@ export class AuthController {
                 }
                 
                 const token = await this.authService.generateToken(value.data.data, AuthType.Email)
-                    return ResponseDto.success({accessToken: token})
-                }
-            ))
+                return ResponseDto.success({accessToken: token})
+            }
+        ))
     }
 
     @Post("/signup")

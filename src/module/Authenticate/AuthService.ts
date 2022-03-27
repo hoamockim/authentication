@@ -36,7 +36,7 @@ export class AuthService {
             'content-type': 'application/json',
             'authorization': ''
         }
-        const veriry = process.env.USER_PROFILE + "verify"
+        const veriry = process.env.USER_PROFILE + "/verify"
       
         return this.httpService.post(veriry, {
             email: email,
